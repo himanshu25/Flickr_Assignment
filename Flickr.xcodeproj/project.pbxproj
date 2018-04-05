@@ -40,8 +40,9 @@
 		A346B7D92074903B00F15B83 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346B7D82074903B00F15B83 /* SearchCell.swift */; };
 		A35ED1CF2076369700563866 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A35ED1CE2076369700563866 /* Alamofire.framework */; };
 		A35ED1D120763C8700563866 /* FlickrManager + Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35ED1D020763C8700563866 /* FlickrManager + Alamofire.swift */; };
-		A35ED1D320763DD800563866 /* FlickrSearchDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35ED1D220763DD800563866 /* FlickrSearchDataSourceAndDelegate.swift */; };
 		A35ED1D720766BE100563866 /* FlickrSearchViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35ED1D620766BE100563866 /* FlickrSearchViewController+Keyboard.swift */; };
+		A35ED22C20768B2500563866 /* Flickr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A35ED22A20768B2500563866 /* Flickr.xcdatamodeld */; };
+		A35ED2322076A1C600563866 /* FlickerSearchViewController+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35ED2312076A1C600563866 /* FlickerSearchViewController+Delegates.swift */; };
 		A38A9693207519C30013F3E3 /* UIImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38A9692207519C30013F3E3 /* UIImageView+Download.swift */; };
 		A3DAF5FC2076318E000C5C3D /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3DAF5FB2076318E000C5C3D /* SwiftyJSON.framework */; };
 		D38C1307B84A6C591A5142CF /* Pods_FlickrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 514D3D13208BE2B139DD6D71 /* Pods_FlickrUITests.framework */; };
@@ -127,8 +128,9 @@
 		A346B7D82074903B00F15B83 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		A35ED1CE2076369700563866 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A35ED1D020763C8700563866 /* FlickrManager + Alamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickrManager + Alamofire.swift"; sourceTree = "<group>"; };
-		A35ED1D220763DD800563866 /* FlickrSearchDataSourceAndDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrSearchDataSourceAndDelegate.swift; sourceTree = "<group>"; };
 		A35ED1D620766BE100563866 /* FlickrSearchViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickrSearchViewController+Keyboard.swift"; sourceTree = "<group>"; };
+		A35ED22B20768B2500563866 /* Flickr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Flickr.xcdatamodel; sourceTree = "<group>"; };
+		A35ED2312076A1C600563866 /* FlickerSearchViewController+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickerSearchViewController+Delegates.swift"; sourceTree = "<group>"; };
 		A38A9692207519C30013F3E3 /* UIImageView+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Download.swift"; sourceTree = "<group>"; };
 		A3DAF5F92076318E000C5C3D /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3DAF5FB2076318E000C5C3D /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -260,22 +262,16 @@
 			isa = PBXGroup;
 			children = (
 				A346B7A420748F8600F15B83 /* AppDelegate.swift */,
-				A346B7A620748F8600F15B83 /* SearchListViewController.swift */,
-				A346B7D220748FB500F15B83 /* FlickrSearchViewController.swift */,
-				A35ED1D220763DD800563866 /* FlickrSearchDataSourceAndDelegate.swift */,
-				A35ED1D620766BE100563866 /* FlickrSearchViewController+Keyboard.swift */,
-				A346B7D420748FE100F15B83 /* FlickrManager.swift */,
-				A35ED1D020763C8700563866 /* FlickrManager + Alamofire.swift */,
-				A38A9692207519C30013F3E3 /* UIImageView+Download.swift */,
-				A32012EB2074CF8100CE67BA /* ListCell.swift */,
-				A320127E2074B53B00CE67BA /* FlickrSearch-Bridging-Header.h */,
-				A346B7D62074901800F15B83 /* FlickrPhoto.swift */,
-				A346B7D82074903B00F15B83 /* SearchCell.swift */,
-				A346B7A820748F8600F15B83 /* Main.storyboard */,
-				A346B7AD20748F8700F15B83 /* LaunchScreen.storyboard */,
-				A346B7B020748F8700F15B83 /* Info.plist */,
-				A30663F420754CED00F35170 /* Images.xcassets */,
+				A35ED2332076A93D00563866 /* Cell */,
+				A35ED23C2076AABF00563866 /* Common */,
+				A35ED2352076A98500563866 /* Manager */,
+				A35ED23B2076AA8F00563866 /* Model */,
 				A320124C2074B53000CE67BA /* SDWebImage */,
+				A35ED23A2076AA5A00563866 /* Storyboard */,
+				A35ED2342076A96100563866 /* ViewControllers */,
+				A35ED22A20768B2500563866 /* Flickr.xcdatamodeld */,
+				A30663F420754CED00F35170 /* Images.xcassets */,
+				A346B7B020748F8700F15B83 /* Info.plist */,
 			);
 			path = Flickr;
 			sourceTree = "<group>";
@@ -296,6 +292,61 @@
 				A346B7C620748F8700F15B83 /* Info.plist */,
 			);
 			path = FlickrUITests;
+			sourceTree = "<group>";
+		};
+		A35ED2332076A93D00563866 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A32012EB2074CF8100CE67BA /* ListCell.swift */,
+				A346B7D82074903B00F15B83 /* SearchCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A35ED2342076A96100563866 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A346B7A620748F8600F15B83 /* SearchListViewController.swift */,
+				A346B7D220748FB500F15B83 /* FlickrSearchViewController.swift */,
+				A35ED1D620766BE100563866 /* FlickrSearchViewController+Keyboard.swift */,
+				A35ED2312076A1C600563866 /* FlickerSearchViewController+Delegates.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A35ED2352076A98500563866 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				A346B7D420748FE100F15B83 /* FlickrManager.swift */,
+				A35ED1D020763C8700563866 /* FlickrManager + Alamofire.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		A35ED23A2076AA5A00563866 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				A346B7A820748F8600F15B83 /* Main.storyboard */,
+				A346B7AD20748F8700F15B83 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		A35ED23B2076AA8F00563866 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A346B7D62074901800F15B83 /* FlickrPhoto.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A35ED23C2076AABF00563866 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A38A9692207519C30013F3E3 /* UIImageView+Download.swift */,
+				A320127E2074B53B00CE67BA /* FlickrSearch-Bridging-Header.h */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -592,6 +643,7 @@
 			files = (
 				A320127F2074B63F00CE67BA /* UIImageView+WebCache.m in Sources */,
 				A32012742074B53100CE67BA /* UIImage+GIF.m in Sources */,
+				A35ED22C20768B2500563866 /* Flickr.xcdatamodeld in Sources */,
 				A32012772074B53100CE67BA /* SDWebImagePrefetcher.m in Sources */,
 				A320127D2074B53100CE67BA /* UIButton+WebCache.m in Sources */,
 				A346B7D520748FE100F15B83 /* FlickrManager.swift in Sources */,
@@ -604,12 +656,12 @@
 				A320127C2074B53100CE67BA /* UIView+WebCacheOperation.m in Sources */,
 				A38A9693207519C30013F3E3 /* UIImageView+Download.swift in Sources */,
 				A32012762074B53100CE67BA /* SDWebImageCompat.m in Sources */,
-				A35ED1D320763DD800563866 /* FlickrSearchDataSourceAndDelegate.swift in Sources */,
 				A346B7A720748F8600F15B83 /* SearchListViewController.swift in Sources */,
 				A32012EC2074CF8100CE67BA /* ListCell.swift in Sources */,
 				A32012722074B53100CE67BA /* UIImageView+HighlightedWebCache.m in Sources */,
 				A346B7D72074901800F15B83 /* FlickrPhoto.swift in Sources */,
 				A320127A2074B53100CE67BA /* NSData+ImageContentType.m in Sources */,
+				A35ED2322076A1C600563866 /* FlickerSearchViewController+Delegates.swift in Sources */,
 				A32012782074B53100CE67BA /* SDImageCache.m in Sources */,
 				A32012752074B53100CE67BA /* UIImage+MultiFormat.m in Sources */,
 				A320126E2074B53100CE67BA /* UIImage+WebP.m in Sources */,
@@ -968,6 +1020,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A35ED22A20768B2500563866 /* Flickr.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A35ED22B20768B2500563866 /* Flickr.xcdatamodel */,
+			);
+			currentVersion = A35ED22B20768B2500563866 /* Flickr.xcdatamodel */;
+			path = Flickr.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A346B79920748F8600F15B83 /* Project object */;
 }

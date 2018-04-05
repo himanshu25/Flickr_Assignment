@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import CoreData
 
-class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchListViewControllerDelegate, FlickrSearchPagingDelegate {
+class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchListViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
    
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -23,13 +24,11 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     var selectedText: String?
     var currentText = ""
     let notificationCenter = NotificationCenter.default
-    let dataSourceAndDelegate =  FlickrSearchDataSourceAndDelegate()
-    
-    var cellsPerRow: Int = 2 {
-        didSet {
-            imageCollectionView.reloadData()
-        }
-    }
+    var cellsPerRow: Int = 2
+    let inset: CGFloat = 10
+    let minimumLineSpacing: CGFloat = 10
+    let minimumInteritemSpacing: CGFloat = 10
+    var pageNumber = 1
     
     static func viewController(with list: [String]?, selectedText: String?) -> FlickrSearchViewController {
         let mainView = UIStoryboard(name: "Main", bundle: nil)
@@ -43,6 +42,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.placeholder = "Please enter some text..."
         hideCollectionViewAndIndicator()
         addNotificationObserver()
         setupDataSourceAndDelegate()
@@ -50,6 +50,18 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         guard let selectedText = selectedText  else { return }
         searchBar.text = selectedText
         searchBarSearchButtonClicked(searchBar)
+    }
+    
+    func saveSearchedText() {
+        let context = getContext()
+        let entity = NSEntityDescription.entity(forEntityName: "FlickrSearch", in: context)
+        let record = NSManagedObject(entity: entity!, insertInto: context)
+        record.setValue(currentText, forKey: "text")
+        record.setValue(4, forKey: "time")
+        do {
+            try context.save()
+        } catch {
+        }
     }
     
     func hideCollectionViewAndIndicator() {
@@ -69,14 +81,28 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     }
     
     func setupDataSourceAndDelegate() {
-        dataSourceAndDelegate.delegate = self
         searchBar.delegate = self
-        imageCollectionView.delegate = dataSourceAndDelegate
-        imageCollectionView.dataSource = dataSourceAndDelegate
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
         imageCollectionView?.contentInsetAdjustmentBehavior = .always
     }
     
     @IBAction func historyItemTapped(_ sender: UIBarButtonItem) {
+        list.removeAll()
+        let moc = getContext()
+        NSEntityDescription.entity(forEntityName: "FlickrSearch", in: moc)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
+        //request.predicate = NSPredicate(format: "age = %@", "12")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try moc.fetch(request)
+            for data in result as! [NSManagedObject] {
+               let text =  data.value(forKey: "text") as! String
+                list.append(text)
+                list.reverse()
+            }
+        } catch {
+        }
         searchBar.resignFirstResponder()
         if list.count > 0 {
             searchListVC = SearchListViewController.viewController(with: list)
@@ -86,6 +112,11 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         else {
             showErrorAlert(message: "No history to show.")
         }
+    }
+
+    func getContext () -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -98,15 +129,6 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     func didSelectOptionFromHistory(text: String, list: [String]) {
         searchBar.text = text
         searchBarSearchButtonClicked(searchBar)
-    }
-    
-    // FlickrSearchPagingDelegate
-    func reloadData(pageNumber: Int) {
-        getNextPage(pageNumber: pageNumber)
-    }
-    
-    func insertPaths(path: [IndexPath]) {
-        imageCollectionView.reloadData()
     }
     
     // UISearchBarDelegate
@@ -122,11 +144,10 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         indicator.isHidden = false
         imageCollectionView.isHidden = true
         photosArray.removeAll()
-        imageCollectionView.reloadData()
         if let enteredText = searchBar.text {
-            FlickrManager.sharedInstance.currentSearchedText = enteredText
             currentText = enteredText
             getNextPage(pageNumber: 1)
+            saveSearchedText()
         }
     }
    
@@ -140,13 +161,10 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
                 }
                 if error == nil && (photos?.count)! > 0 {
                     for photo in photos! {
-                        strongSelf.dataSourceAndDelegate.photosArray.append(photo)
+                        strongSelf.photosArray.append(photo)
                     }
-                    let finalList = strongSelf.list.filter { $0 != strongSelf.currentText}
-                    strongSelf.list = finalList
-                    strongSelf.list.insert(strongSelf.currentText, at: 0)
                     DispatchQueue.main.async(execute: { () -> Void in
-                        strongSelf.dataSourceAndDelegate.insertMore()
+                        strongSelf.insertMoreIndexPath()
                         strongSelf.indicator.isHidden = true
                         strongSelf.imageCollectionView.isHidden = false
                         strongSelf.title = strongSelf.currentText
@@ -163,6 +181,18 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
                 }
             }
         }
+    }
+    
+    // Paging
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == photosArray.count - 1 {
+            moreData()
+        }
+    }
+    
+    func moreData() {
+        pageNumber += 1
+        getNextPage(pageNumber: pageNumber)
     }
     
     // show error

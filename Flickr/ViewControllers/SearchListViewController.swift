@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol SearchListViewControllerDelegate: class {
     func didSelectOptionFromHistory(text: String, list: [String])
@@ -22,7 +23,7 @@ class SearchListViewController: UIViewController, UITableViewDelegate, UITableVi
         let searchListVC = mainView.instantiateViewController(withIdentifier: "searchListVC") as! SearchListViewController
         searchListVC.list = list
         return searchListVC
-    }    
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
@@ -36,10 +37,52 @@ class SearchListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             // if not same search as last one
+            deleteRecord(selectedtext: list[indexPath.row])
             if list[indexPath.row] != FlickrManager.sharedInstance.currentSearchedText {
                delegate?.didSelectOptionFromHistory(text: list[indexPath.row], list: self.list)
             }
             dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func deleteRecord(selectedtext: String) {
+        let moc = getContext()
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
+        let result = try? moc.fetch(fetchRequest)
+        let resultData = result as! [FlickrSearch]
+        for object in resultData {
+            if object.text == selectedtext {
+                 moc.delete(object)
+            }
+        }
+        do {
+            try moc.save()
+        } catch let error as NSError  {
+        }
+    }
+    
+    @IBAction func deleteHistoryTapped() {
+        
+        let moc = getContext()
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
+        let result = try? moc.fetch(fetchRequest)
+        let resultData = result as! [FlickrSearch]
+        for object in resultData {
+            moc.delete(object)
+            list.removeAll()
+            contentTable.reloadData()
+        }
+        do {
+            try moc.save()
+        } catch let error as NSError  {
+        } catch {
+            
+        }
+    }
+    
+    func getContext () -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
     }
     
     @IBAction func dismissButtonTapped() {

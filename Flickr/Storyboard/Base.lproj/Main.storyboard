@@ -142,17 +142,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krg-Y4-FZ4">
-                                <rect key="frame" x="15" y="35" width="40" height="40"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jZb-V2-lM5">
+                                <rect key="frame" x="15" y="30" width="340" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krg-Y4-FZ4">
+                                        <rect key="frame" x="0.0" y="0.0" width="113.5" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="IZa-06-cIw"/>
+                                        </constraints>
+                                        <state key="normal" image="Charcoal"/>
+                                        <connections>
+                                            <action selector="dismissButtonTapped" destination="bJZ-mx-AEI" eventType="touchUpInside" id="YDr-jz-5WO"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h28-hP-WKR">
+                                        <rect key="frame" x="113.5" y="0.0" width="113" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="swD-Nd-uip"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9K-tG-eCP">
+                                        <rect key="frame" x="226.5" y="0.0" width="113.5" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="BOC-lF-SbC"/>
+                                        </constraints>
+                                        <state key="normal" title="Delete">
+                                            <color key="titleColor" red="0.97869014310000002" green="0.027681028470000001" blue="0.027681028470000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteHistoryTapped" destination="bJZ-mx-AEI" eventType="touchUpInside" id="TTp-bg-ob1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="IZa-06-cIw"/>
-                                    <constraint firstAttribute="width" constant="40" id="oxX-xO-ZeD"/>
+                                    <constraint firstAttribute="height" constant="40" id="fDR-gw-a7h"/>
                                 </constraints>
-                                <state key="normal" image="Charcoal"/>
-                                <connections>
-                                    <action selector="dismissButtonTapped" destination="bJZ-mx-AEI" eventType="touchUpInside" id="YDr-jz-5WO"/>
-                                </connections>
-                            </button>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" estimatedRowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pzF-Yu-shk">
                                 <rect key="frame" x="0.0" y="80" width="375" height="587"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -166,7 +194,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LMl-sB-nH1">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -205,8 +233,9 @@
                             <constraint firstItem="yJz-Rs-c6Q" firstAttribute="bottom" secondItem="pzF-Yu-shk" secondAttribute="bottom" id="S7N-FG-XIZ"/>
                             <constraint firstItem="pzF-Yu-shk" firstAttribute="leading" secondItem="yJz-Rs-c6Q" secondAttribute="leading" id="dXf-S9-UbH"/>
                             <constraint firstItem="pzF-Yu-shk" firstAttribute="top" secondItem="yJz-Rs-c6Q" secondAttribute="top" constant="60" id="e4u-OR-GJI"/>
-                            <constraint firstItem="krg-Y4-FZ4" firstAttribute="top" secondItem="yJz-Rs-c6Q" secondAttribute="top" constant="15" id="q6g-Of-Nth"/>
-                            <constraint firstItem="krg-Y4-FZ4" firstAttribute="leading" secondItem="yJz-Rs-c6Q" secondAttribute="leading" constant="15" id="r3Y-HB-CnQ"/>
+                            <constraint firstItem="yJz-Rs-c6Q" firstAttribute="trailing" secondItem="jZb-V2-lM5" secondAttribute="trailing" constant="20" id="kEh-rv-boa"/>
+                            <constraint firstItem="jZb-V2-lM5" firstAttribute="leading" secondItem="yJz-Rs-c6Q" secondAttribute="leading" constant="15" id="qwI-9e-lhb"/>
+                            <constraint firstItem="jZb-V2-lM5" firstAttribute="top" secondItem="yJz-Rs-c6Q" secondAttribute="top" constant="10" id="tmH-CL-cdd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yJz-Rs-c6Q"/>
                     </view>
@@ -216,6 +245,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="smF-FF-8TV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="669.60000000000002" y="31.934032983508249"/>
         </scene>
     </scenes>
     <resources>
