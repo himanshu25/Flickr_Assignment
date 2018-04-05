@@ -14,7 +14,12 @@ class FlickrSearchDataSourceAndDelegate: NSObject, UICollectionViewDataSource, U
     let inset: CGFloat = 10
     let minimumLineSpacing: CGFloat = 10
     let minimumInteritemSpacing: CGFloat = 10
-    var cellsPerRow = 2 
+    var cellsPerRow = 2
+    
+    let pageNumber = 5
+    let perPage = 10
+    var min = 0
+    var max = 9
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photosArray.count
@@ -44,6 +49,13 @@ class FlickrSearchDataSourceAndDelegate: NSObject, UICollectionViewDataSource, U
         return CGSize(width: itemWidth, height: itemWidth)
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == photosArray.count - 1 {
+            moreData()
+        }
+    }
+    
+   
     func setCellsPerRow() {
         if UIDevice.current.orientation.isLandscape  {
             cellsPerRow = 3

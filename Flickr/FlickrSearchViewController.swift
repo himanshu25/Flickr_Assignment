@@ -11,7 +11,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UISearchBarDelegate, SearchListViewControllerDelegate {
+class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UISearchBarDelegate, SearchListViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -22,12 +22,20 @@ class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     var list = [String]()
     var selectedText: String?
+    var currentText = ""
     let notificationCenter = NotificationCenter.default
     var cellsPerRow: Int = 2 {
         didSet {
             imageCollectionView.reloadData()
         }
     }
+    let inset: CGFloat = 10
+    let minimumLineSpacing: CGFloat = 10
+    let minimumInteritemSpacing: CGFloat = 10
+    
+    var pageNumber = 1
+    var min = 0
+    var max = 9
     let dataSourceAndDelegate =  FlickrSearchDataSourceAndDelegate()
     
     static func viewController(with list: [String]?, selectedText: String?) -> FlickrSearchViewController {
@@ -51,21 +59,13 @@ class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UI
         searchBar.text = selectedText
         searchBarSearchButtonClicked(searchBar)
     }
-    
-    func addNotificationObserver() {
-        notificationCenter.addObserver(self, selector: #selector(FlickrSearchViewController.keyboardWasShown(notification:)), name: .UIKeyboardDidShow, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(FlickrSearchViewController.keyboardWasShown(notification:)), name: .UIKeyboardDidChangeFrame, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(FlickrSearchViewController.keyboardWillBeHidden(notification:)), name: .UIKeyboardDidHide, object: nil)
-    }
-    
+        
     func setCellsPerRow() {
         if UIDevice.current.orientation.isLandscape  {
-            dataSourceAndDelegate.cellsPerRow = 3
             cellsPerRow = 3
             spacingForSearchBar.constant = 40
         }
         else {
-            dataSourceAndDelegate.cellsPerRow = 2
             cellsPerRow = 2
             spacingForSearchBar.constant = 60
         }
@@ -73,8 +73,8 @@ class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UI
     
     func setupDataSourceAndDelegate() {
         searchBar.delegate = self
-        imageCollectionView.delegate = dataSourceAndDelegate
-        imageCollectionView.dataSource = dataSourceAndDelegate
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
         imageCollectionView?.contentInsetAdjustmentBehavior = .always
     }
     
@@ -86,34 +86,8 @@ class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UI
         imageCollectionView.reloadData()
         if let enteredText = searchBar.text {
             FlickrManager.sharedInstance.currentSearchedText = enteredText
-            FlickrManager.sharedInstance.getPhotosWithText(text: enteredText) { [weak self] (error, photos) in
-                if let strongSelf = self {
-                    guard let count = photos?.count else {
-                        strongSelf.showErrorAlert(message: "")
-                        return
-                    }
-                    if error == nil && (photos?.count)! > 0 {
-                        strongSelf.dataSourceAndDelegate.photosArray = photos!
-                        let finalList = strongSelf.list.filter { $0 != enteredText}
-                        strongSelf.list = finalList
-                        strongSelf.list.insert(enteredText, at: 0)
-                        DispatchQueue.main.async(execute: { () -> Void in
-                            strongSelf.indicator.isHidden = true
-                            strongSelf.imageCollectionView.isHidden = false
-                            strongSelf.title = searchBar.text ?? ""
-                            strongSelf.imageCollectionView.reloadData()
-                        })
-                        
-                    } else {
-                        strongSelf.photosArray = []
-                        DispatchQueue.main.async(execute: { () -> Void in
-                            strongSelf.indicator.isHidden = true
-                            strongSelf.imageCollectionView.isHidden = false
-                            strongSelf.showErrorAlert(message: error?.localizedDescription ?? "")
-                        })
-                    }
-                }
-            }
+            currentText = enteredText
+            getNextPage(pageNumber: pageNumber)
         }
     }
     
@@ -147,22 +121,6 @@ class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UI
         }
     }
     
-    @objc func hideAccessoryView(_ sender: AnyObject) {
-        searchBar.resignFirstResponder()
-    }
-    
-    @objc func keyboardWasShown(notification: Notification){
-        let userinfo = notification.userInfo
-        let keyboardSize = (userinfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
-        let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: (keyboardSize?.height)!, right: 0)
-        imageCollectionView.contentInset = edgeInsets
-        
-    }
-    @objc func keyboardWillBeHidden(notification: Notification){
-        let zeroInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        imageCollectionView.contentInset = zeroInsets
-    }
-    
     private func showErrorAlert(message: String) {
         indicator.isHidden = true
         imageCollectionView.isHidden = true
@@ -170,5 +128,87 @@ class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UI
         let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         alertController.addAction(dismissAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photosArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrSearchCell", for: indexPath) as! SearchCell
+        cell.setupWithPhoto(flickr: photosArray[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return minimumLineSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return minimumInteritemSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let marginsAndInsets = inset * 2 + collectionView.safeAreaInsets.left + collectionView.safeAreaInsets.right + minimumInteritemSpacing * CGFloat(cellsPerRow - 1)
+        let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == photosArray.count - 1 {
+            moreData()
+        }
+    }
+    
+    func moreData() {
+       pageNumber += 1
+        getNextPage(pageNumber: pageNumber)
+    }
+    
+    
+    func insertMore() {
+        var paths = [IndexPath]()
+        for _ in 0..<10 {
+            paths.append(IndexPath(row: photosArray.count - 1, section: 0))
+        }
+        imageCollectionView.insertItems(at: paths)
+    }
+    
+    func getNextPage(pageNumber: Int) {
+        FlickrManager.sharedInstance.getPhotosWithText(text:currentText, pageNumber: pageNumber) { [weak self](error, photos) in
+            if let strongSelf = self {
+                guard let count = photos?.count else {
+                    strongSelf.showErrorAlert(message: "")
+                    return
+                }
+                if error == nil && (photos?.count)! > 0 {
+                    for photo in photos! {
+                        strongSelf.photosArray.append(photo)
+                    }
+                    let finalList = strongSelf.list.filter { $0 != strongSelf.currentText}
+                    strongSelf.list = finalList
+                    strongSelf.list.insert(strongSelf.currentText, at: 0)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        strongSelf.insertMore()
+                        strongSelf.indicator.isHidden = true
+                        strongSelf.imageCollectionView.isHidden = false
+                        strongSelf.title = strongSelf.currentText
+                        strongSelf.imageCollectionView.reloadData()
+                    })
+                    
+                } else {
+                    strongSelf.photosArray = []
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        strongSelf.indicator.isHidden = true
+                        strongSelf.imageCollectionView.isHidden = false
+                        strongSelf.showErrorAlert(message: error?.localizedDescription ?? "")
+                    })
+                }
+            }
+        }
     }
 }
