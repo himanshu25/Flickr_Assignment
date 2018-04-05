@@ -15,7 +15,6 @@ protocol SearchListViewControllerDelegate: class {
 class SearchListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var contentTable: UITableView!
     var list = [String]()
-    var contentCells = [UITableViewCell]()
     weak var delegate: SearchListViewControllerDelegate?
     
     static func viewController(with list: [String]) -> SearchListViewController {
@@ -32,18 +31,15 @@ class SearchListViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! ListCell
         cell.label.text = list[indexPath.row]
-        contentCells.append(cell)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = contentCells[indexPath.row] as? ListCell {
             // if not same search as last one
-            if cell.label.text ?? "" != FlickrManager.sharedInstance.currentSearchedText {
-               delegate?.didSelectOptionFromHistory(text: cell.label.text ?? "", list: self.list)
+            if list[indexPath.row] != FlickrManager.sharedInstance.currentSearchedText {
+               delegate?.didSelectOptionFromHistory(text: list[indexPath.row], list: self.list)
             }
             dismiss(animated: true, completion: nil)
-        }
     }
     
     @IBAction func dismissButtonTapped() {

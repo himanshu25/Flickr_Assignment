@@ -18,7 +18,12 @@ class FlickrPhoto: NSObject {
     var title: String!
     var url: URL!
      
-     init(photoId: String, farm: Int, secret: String, server: String, title: String) {
+     init(photoDictionary: NSDictionary) {
+          let photoId = photoDictionary["id"] as? String ?? ""
+          let farm = photoDictionary["farm"] as? Int ?? 0
+          let secret = photoDictionary["secret"] as? String ?? ""
+          let server = photoDictionary["server"] as? String ?? ""
+          let title = photoDictionary["title"] as? String ?? ""
           self.photoId = photoId
           self.farm = farm
           self.secret = secret

@@ -18,16 +18,9 @@ extension FlickrManager {
                         do {
                             let responseResult = response.result
                             let resultsDictionary = responseResult.value as? [String: AnyObject]
-                            guard let _ = resultsDictionary else { return }
-                            guard let photosContainer = resultsDictionary![self.photos] as? NSDictionary else { return }
-                            guard let photosArray = photosContainer[self.photo] as? [NSDictionary] else { return }
+                            guard let _ = resultsDictionary, let photosContainer = resultsDictionary![self.photos] as? NSDictionary, let photosArray = photosContainer[self.photo] as? [NSDictionary] else { return }
                             let flickrPhotoArray: [FlickrPhoto] = photosArray.map { photoDictionary in
-                                let photoId = photoDictionary[self.photoId] as? String ?? ""
-                                let farm = photoDictionary[self.farm] as? Int ?? 0
-                                let secret = photoDictionary[self.secret] as? String ?? ""
-                                let server = photoDictionary[self.server] as? String ?? ""
-                                let title = photoDictionary[self.title] as? String ?? ""
-                                let flickrPhoto = FlickrPhoto(photoId: photoId, farm: farm, secret: secret, server: server, title: title)
+                                let flickrPhoto = FlickrPhoto(photoDictionary: photoDictionary)
                                 return flickrPhoto
                             }
                             completion(nil, flickrPhotoArray)

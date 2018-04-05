@@ -7,6 +7,12 @@
 //
 
 import Foundation
+import UIKit
+
+protocol FlickrSearchPagingDelegate: class {
+    func reloadData(pageNumber: Int)
+    func insertPaths(path: [IndexPath])
+}
 
 class FlickrSearchDataSourceAndDelegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -15,12 +21,10 @@ class FlickrSearchDataSourceAndDelegate: NSObject, UICollectionViewDataSource, U
     let minimumLineSpacing: CGFloat = 10
     let minimumInteritemSpacing: CGFloat = 10
     var cellsPerRow = 2
+    var pageNumber = 1
+    weak var delegate: FlickrSearchPagingDelegate?
     
-    let pageNumber = 5
-    let perPage = 10
-    var min = 0
-    var max = 9
-    
+    // UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photosArray.count
     }
@@ -31,6 +35,7 @@ class FlickrSearchDataSourceAndDelegate: NSObject, UICollectionViewDataSource, U
         return cell
     }
     
+    // UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }
@@ -55,7 +60,20 @@ class FlickrSearchDataSourceAndDelegate: NSObject, UICollectionViewDataSource, U
         }
     }
     
-   
+    // Paging
+    func moreData() {
+        pageNumber += 1
+        delegate?.reloadData(pageNumber: pageNumber)
+    }
+    
+    func insertMore() {
+        var paths = [IndexPath]()
+        for _ in 0..<10 {
+            paths.append(IndexPath(row: photosArray.count - 1, section: 0))
+        }
+        delegate?.insertPaths(path: paths)
+    }
+    
     func setCellsPerRow() {
         if UIDevice.current.orientation.isLandscape  {
             cellsPerRow = 3
