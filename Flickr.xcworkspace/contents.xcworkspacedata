@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "absolute:/Users/himanshu/Desktop/Projects/Flickr_Assignment/Flickr/FlickrSearch+CoreDataProperties.swift">
+      location = "group:FlickrSearch+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "absolute:/Users/himanshu/Desktop/Projects/Flickr_Assignment/Flickr/FlickrSearch+CoreDataClass.swift">
+      location = "group:FlickrSearch+CoreDataProperties.swift">
    </FileRef>
    <FileRef
       location = "group:Flickr.xcodeproj">

@@ -38,10 +38,10 @@
 		A346B7D520748FE100F15B83 /* FlickrManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346B7D420748FE100F15B83 /* FlickrManager.swift */; };
 		A346B7D72074901800F15B83 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346B7D62074901800F15B83 /* FlickrPhoto.swift */; };
 		A346B7D92074903B00F15B83 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A346B7D82074903B00F15B83 /* SearchCell.swift */; };
+		A35321CA2076AE3D0077FAB3 /* Flickr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A35321C82076AE3D0077FAB3 /* Flickr.xcdatamodeld */; };
 		A35ED1CF2076369700563866 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A35ED1CE2076369700563866 /* Alamofire.framework */; };
 		A35ED1D120763C8700563866 /* FlickrManager + Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35ED1D020763C8700563866 /* FlickrManager + Alamofire.swift */; };
 		A35ED1D720766BE100563866 /* FlickrSearchViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35ED1D620766BE100563866 /* FlickrSearchViewController+Keyboard.swift */; };
-		A35ED22C20768B2500563866 /* Flickr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A35ED22A20768B2500563866 /* Flickr.xcdatamodeld */; };
 		A35ED2322076A1C600563866 /* FlickerSearchViewController+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35ED2312076A1C600563866 /* FlickerSearchViewController+Delegates.swift */; };
 		A38A9693207519C30013F3E3 /* UIImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38A9692207519C30013F3E3 /* UIImageView+Download.swift */; };
 		A3DAF5FC2076318E000C5C3D /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3DAF5FB2076318E000C5C3D /* SwiftyJSON.framework */; };
@@ -126,10 +126,10 @@
 		A346B7D420748FE100F15B83 /* FlickrManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrManager.swift; sourceTree = "<group>"; };
 		A346B7D62074901800F15B83 /* FlickrPhoto.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		A346B7D82074903B00F15B83 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		A35321C92076AE3D0077FAB3 /* Flickr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Flickr.xcdatamodel; sourceTree = "<group>"; };
 		A35ED1CE2076369700563866 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A35ED1D020763C8700563866 /* FlickrManager + Alamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickrManager + Alamofire.swift"; sourceTree = "<group>"; };
 		A35ED1D620766BE100563866 /* FlickrSearchViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickrSearchViewController+Keyboard.swift"; sourceTree = "<group>"; };
-		A35ED22B20768B2500563866 /* Flickr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Flickr.xcdatamodel; sourceTree = "<group>"; };
 		A35ED2312076A1C600563866 /* FlickerSearchViewController+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlickerSearchViewController+Delegates.swift"; sourceTree = "<group>"; };
 		A38A9692207519C30013F3E3 /* UIImageView+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Download.swift"; sourceTree = "<group>"; };
 		A3DAF5F92076318E000C5C3D /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -267,11 +267,12 @@
 				A35ED2352076A98500563866 /* Manager */,
 				A35ED23B2076AA8F00563866 /* Model */,
 				A320124C2074B53000CE67BA /* SDWebImage */,
-				A35ED23A2076AA5A00563866 /* Storyboard */,
 				A35ED2342076A96100563866 /* ViewControllers */,
-				A35ED22A20768B2500563866 /* Flickr.xcdatamodeld */,
+				A346B7A820748F8600F15B83 /* Main.storyboard */,
+				A346B7AD20748F8700F15B83 /* LaunchScreen.storyboard */,
 				A30663F420754CED00F35170 /* Images.xcassets */,
 				A346B7B020748F8700F15B83 /* Info.plist */,
+				A35321C82076AE3D0077FAB3 /* Flickr.xcdatamodeld */,
 			);
 			path = Flickr;
 			sourceTree = "<group>";
@@ -321,15 +322,6 @@
 				A35ED1D020763C8700563866 /* FlickrManager + Alamofire.swift */,
 			);
 			path = Manager;
-			sourceTree = "<group>";
-		};
-		A35ED23A2076AA5A00563866 /* Storyboard */ = {
-			isa = PBXGroup;
-			children = (
-				A346B7A820748F8600F15B83 /* Main.storyboard */,
-				A346B7AD20748F8700F15B83 /* LaunchScreen.storyboard */,
-			);
-			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		A35ED23B2076AA8F00563866 /* Model */ = {
@@ -643,7 +635,7 @@
 			files = (
 				A320127F2074B63F00CE67BA /* UIImageView+WebCache.m in Sources */,
 				A32012742074B53100CE67BA /* UIImage+GIF.m in Sources */,
-				A35ED22C20768B2500563866 /* Flickr.xcdatamodeld in Sources */,
+				A35321CA2076AE3D0077FAB3 /* Flickr.xcdatamodeld in Sources */,
 				A32012772074B53100CE67BA /* SDWebImagePrefetcher.m in Sources */,
 				A320127D2074B53100CE67BA /* UIButton+WebCache.m in Sources */,
 				A346B7D520748FE100F15B83 /* FlickrManager.swift in Sources */,
@@ -1022,12 +1014,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A35ED22A20768B2500563866 /* Flickr.xcdatamodeld */ = {
+		A35321C82076AE3D0077FAB3 /* Flickr.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A35ED22B20768B2500563866 /* Flickr.xcdatamodel */,
+				A35321C92076AE3D0077FAB3 /* Flickr.xcdatamodel */,
 			);
-			currentVersion = A35ED22B20768B2500563866 /* Flickr.xcdatamodel */;
+			currentVersion = A35321C92076AE3D0077FAB3 /* Flickr.xcdatamodel */;
 			path = Flickr.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
