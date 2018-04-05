@@ -20,9 +20,11 @@ class FlickrManager {
     let server = "server"
     let title =  "title"
     
+    var photosList = [FlickrPhoto]()
+    
     static var imageURLDict:[String: UIImage] = [:]
     var currentSearchedText = ""
-    static let sharedInstance = FlickrManager()
+    static var sharedInstance = FlickrManager()
     typealias flickrCompletionBlock = (NSError?, [FlickrPhoto]?) -> Void
     let urlConfig = URLSessionConfiguration.default
     
@@ -60,5 +62,9 @@ class FlickrManager {
             }
         }
         dataTask.resume()
+    }
+    
+    func allPhotos() -> [FlickrPhoto] {
+        return photosList
     }
 }

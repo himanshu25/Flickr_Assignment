@@ -23,7 +23,7 @@ class SearchListViewController: UIViewController, UITableViewDelegate, UITableVi
         let searchListVC = mainView.instantiateViewController(withIdentifier: "searchListVC") as! SearchListViewController
         searchListVC.list = list
         return searchListVC
-    }
+    }    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count

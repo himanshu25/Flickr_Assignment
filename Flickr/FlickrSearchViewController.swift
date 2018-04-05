@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+import Alamofire
+import SwiftyJSON
 
-class FlickrSearchViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, SearchListViewControllerDelegate {
+class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UISearchBarDelegate, SearchListViewControllerDelegate {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -17,20 +19,16 @@ class FlickrSearchViewController: UIViewController,UICollectionViewDataSource, U
     weak var searchListVC: SearchListViewController?
     @IBOutlet weak var spacingForSearchBar: NSLayoutConstraint!
     @IBOutlet weak var emptyImageStackView: UIStackView!
-    
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     var list = [String]()
     var selectedText: String?
-    let inset: CGFloat = 10
-    let minimumLineSpacing: CGFloat = 10
-    let minimumInteritemSpacing: CGFloat = 10
     let notificationCenter = NotificationCenter.default
-
     var cellsPerRow: Int = 2 {
         didSet {
             imageCollectionView.reloadData()
         }
     }
+    let dataSourceAndDelegate =  FlickrSearchDataSourceAndDelegate()
     
     static func viewController(with list: [String]?, selectedText: String?) -> FlickrSearchViewController {
         let mainView = UIStoryboard(name: "Main", bundle: nil)
@@ -47,8 +45,8 @@ class FlickrSearchViewController: UIViewController,UICollectionViewDataSource, U
         indicator.isHidden = true
         imageCollectionView.isHidden = true
         addNotificationObserver()
-        setCellsPerRow()
         setupDataSourceAndDelegate()
+        setCellsPerRow()
         guard let selectedText = selectedText  else { return }
         searchBar.text = selectedText
         searchBarSearchButtonClicked(searchBar)
@@ -62,18 +60,20 @@ class FlickrSearchViewController: UIViewController,UICollectionViewDataSource, U
     
     func setCellsPerRow() {
         if UIDevice.current.orientation.isLandscape  {
+            dataSourceAndDelegate.cellsPerRow = 3
             cellsPerRow = 3
             spacingForSearchBar.constant = 40
         }
         else {
+            dataSourceAndDelegate.cellsPerRow = 2
             cellsPerRow = 2
             spacingForSearchBar.constant = 60
         }
     }
     func setupDataSourceAndDelegate() {
         searchBar.delegate = self
-        imageCollectionView.delegate = self
-        imageCollectionView.dataSource = self
+        imageCollectionView.delegate = dataSourceAndDelegate
+        imageCollectionView.dataSource = dataSourceAndDelegate
         imageCollectionView?.contentInsetAdjustmentBehavior = .always
     }
     
@@ -85,14 +85,14 @@ class FlickrSearchViewController: UIViewController,UICollectionViewDataSource, U
         imageCollectionView.reloadData()
         if let enteredText = searchBar.text {
             FlickrManager.sharedInstance.currentSearchedText = enteredText
-            FlickrManager.sharedInstance.getPhotosWithText(text: enteredText) { [weak self] (error, photosArray) in
+            FlickrManager.sharedInstance.getPhotosWithText(text: enteredText) { [weak self] (error, photos) in
                 if let strongSelf = self {
-                    guard let count = photosArray?.count else {
+                    guard let count = photos?.count else {
                         strongSelf.showErrorAlert(message: "")
                         return
                     }
-                    if error == nil && (photosArray?.count)! > 0 {
-                        strongSelf.photosArray = photosArray!
+                    if error == nil && (photos?.count)! > 0 {
+                        strongSelf.dataSourceAndDelegate.photosArray = photos!
                         let finalList = strongSelf.list.filter { $0 != enteredText}
                         strongSelf.list = finalList
                         strongSelf.list.insert(enteredText, at: 0)
@@ -126,34 +126,6 @@ class FlickrSearchViewController: UIViewController,UICollectionViewDataSource, U
         else {
             showErrorAlert(message: "No history to show.")
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return minimumLineSpacing
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return minimumInteritemSpacing
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let marginsAndInsets = inset * 2 + collectionView.safeAreaInsets.left + collectionView.safeAreaInsets.right + minimumInteritemSpacing * CGFloat(cellsPerRow - 1)
-        let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
-        return CGSize(width: itemWidth, height: itemWidth)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosArray.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrSearchCell", for: indexPath) as! SearchCell
-        cell.setupWithPhoto(flickr: photosArray[indexPath.row])
-        return cell
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -197,5 +169,23 @@ class FlickrSearchViewController: UIViewController,UICollectionViewDataSource, U
         let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         alertController.addAction(dismissAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    private func request(url: String, data: [String: Any]?, type: HTTPMethod) {
+        Alamofire.request(url, method: type, parameters: data).responseJSON { response in
+            response.result.ifSuccess {
+                DispatchQueue.main.async {
+//                    let status = NStatus(success: true, code: "200", message: nil)
+//                    completion?(status, self.wrapData(response.result.value))
+                }
+            }
+            response.result.ifFailure {
+                DispatchQueue.main.async {
+                    let code = response.response?.statusCode ?? 0
+//                    let status = NStatus(success: false, code: "\(code)", message: nil)
+//                    completion?(status, self.wrapData(response.result.value))
+                }
+            }
+        }
     }
 }

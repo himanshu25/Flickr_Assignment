@@ -25,6 +25,7 @@ extension UIImageView {
                 else { return }
                 FlickrManager.imageURLDict[url.absoluteString] = image
                 DispatchQueue.main.async() {
+                    // review it
                     self.image = image
                 }
                 }.resume()
