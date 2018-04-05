@@ -70,6 +70,7 @@ class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UI
             spacingForSearchBar.constant = 60
         }
     }
+    
     func setupDataSourceAndDelegate() {
         searchBar.delegate = self
         imageCollectionView.delegate = dataSourceAndDelegate
@@ -169,23 +170,5 @@ class FlickrSearchViewController: UIViewController, UICollectionViewDelegate, UI
         let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         alertController.addAction(dismissAction)
         present(alertController, animated: true, completion: nil)
-    }
-    
-    private func request(url: String, data: [String: Any]?, type: HTTPMethod) {
-        Alamofire.request(url, method: type, parameters: data).responseJSON { response in
-            response.result.ifSuccess {
-                DispatchQueue.main.async {
-//                    let status = NStatus(success: true, code: "200", message: nil)
-//                    completion?(status, self.wrapData(response.result.value))
-                }
-            }
-            response.result.ifFailure {
-                DispatchQueue.main.async {
-                    let code = response.response?.statusCode ?? 0
-//                    let status = NStatus(success: false, code: "\(code)", message: nil)
-//                    completion?(status, self.wrapData(response.result.value))
-                }
-            }
-        }
     }
 }
