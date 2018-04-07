@@ -18,7 +18,9 @@ extension FlickrSearchViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrSearchCell", for: indexPath) as! FlickrSearchCell
-        cell.setupWithPhoto(flickr: photosArray[indexPath.row])
+        if photosArray.count > 0 {
+            cell.setupWithPhoto(flickr: photosArray[indexPath.row])
+        }
         return cell
     }
     
@@ -43,9 +45,9 @@ extension FlickrSearchViewController {
     }
     
     
-    func insertMoreIndexPath() {
+    func insertMoreIndexPath(count: Int) {
         var paths = [IndexPath]()
-        for _ in 0..<10 {
+        for _ in 0..<count {
             paths.append(IndexPath(row: photosArray.count - 1, section: 0))
         }
     }

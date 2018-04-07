@@ -133,6 +133,9 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     
     // SearchListViewControllerDelegate
     func didSelectOptionFromHistory(text: String, list: [String]) {
+        photosArray.removeAll()
+        pageNumber = 1
+        imageCollectionView.reloadData()
         searchBar.text = text
         searchBarSearchButtonClicked(searchBar)
     }
@@ -166,12 +169,12 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
                     strongSelf.showErrorAlert(message: "")
                     return
                 }
-                if error == nil && (photos?.count)! > 0 {
+                if error == nil && (photos?.count ?? 0) > 0 {
                     for photo in photos! {
                         strongSelf.photosArray.append(photo)
                     }
                     DispatchQueue.main.async(execute: { () -> Void in
-                        strongSelf.insertMoreIndexPath()
+                        strongSelf.insertMoreIndexPath(count: photos?.count ?? 0)
                         strongSelf.indicator.isHidden = true
                         strongSelf.imageCollectionView.isHidden = false
                         strongSelf.title = strongSelf.currentText
@@ -183,7 +186,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
                     DispatchQueue.main.async(execute: { () -> Void in
                         strongSelf.indicator.isHidden = true
                         strongSelf.imageCollectionView.isHidden = false
-                        strongSelf.showErrorAlert(message: error?.localizedDescription ?? "")
+                       strongSelf.showErrorAlert(message: error?.localizedDescription ?? "")
                     })
                 }
             }
@@ -205,8 +208,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     // show error
     private func showErrorAlert(message: String) {
         indicator.isHidden = true
-        imageCollectionView.isHidden = true
-        let alertController = UIAlertController(title: "Search Error", message: !message.isEmpty ? message : "Tha data couldn't be read because it isn't in the correct format." , preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Search Error", message: !message.isEmpty ? message : "No more images to show." , preferredStyle: .alert)
         let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         alertController.addAction(dismissAction)
         present(alertController, animated: true, completion: nil)

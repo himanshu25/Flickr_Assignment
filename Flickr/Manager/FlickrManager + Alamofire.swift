@@ -32,7 +32,7 @@ extension FlickrManager {
             response.result.ifFailure {
                 DispatchQueue.main.async {
                     let code = response.response?.statusCode ?? 0
-                    completion(nil, [])
+                    completion(nil, nil)
                 }
             }
         }
