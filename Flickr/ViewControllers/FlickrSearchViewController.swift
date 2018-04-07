@@ -183,7 +183,6 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
                     })
                     
                 } else {
-                    strongSelf.photosArray = []
                     DispatchQueue.main.async(execute: { () -> Void in
                         strongSelf.indicator.isHidden = true
                         strongSelf.imageCollectionView.isHidden = false
