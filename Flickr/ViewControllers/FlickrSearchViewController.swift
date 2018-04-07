@@ -42,7 +42,6 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.placeholder = "Please enter some text..."
         hideCollectionViewAndIndicator()
         addNotificationObserver()
         setupDataSourceAndDelegate()
