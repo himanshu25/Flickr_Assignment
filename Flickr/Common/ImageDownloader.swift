@@ -22,7 +22,7 @@ class DownloadStateInformation {
         self.completion = completion
     }
 }
-
+// Can use caching as well
 class ImageDownloader: NSObject {
     private var dict: [String: DownloadStateInformation] = [:]
     static let sharedInstance = ImageDownloader()
