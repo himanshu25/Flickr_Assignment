@@ -17,8 +17,6 @@ class FlickrSearchDetailViewController: UIViewController {
     static func viewController(flickrPhoto: FlickrPhoto) -> FlickrSearchDetailViewController {
         let mainView = UIStoryboard(name: "Main", bundle: nil)
         let searchDetailVC = mainView.instantiateViewController(withIdentifier: "searchDetailVC") as! FlickrSearchDetailViewController
-//        searchDetailVC.imageTitle = title
-//        searchDetailVC.image = image
         searchDetailVC.flickrPhoto = flickrPhoto
         return searchDetailVC
     }

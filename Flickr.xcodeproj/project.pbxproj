@@ -11,6 +11,8 @@
 		6008EC6E03F7C9CEEFCC7017 /* Pods_FlickrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD04C5C30C8A76C017E0655 /* Pods_FlickrTests.framework */; };
 		A30663F520754CED00F35170 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A30663F420754CED00F35170 /* Images.xcassets */; };
 		A30AE6382078BFBB00C8EB02 /* FlickrSearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AE6372078BFBB00C8EB02 /* FlickrSearchDetailViewController.swift */; };
+		A30AE63A2078F38C00C8EB02 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AE6392078F38C00C8EB02 /* ImageDownloader.swift */; };
+		A30AE63C2078FEEE00C8EB02 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AE63B2078FEEE00C8EB02 /* DataManager.swift */; };
 		A320126E2074B53100CE67BA /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = A320124D2074B53000CE67BA /* UIImage+WebP.m */; };
 		A320126F2074B53100CE67BA /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A320124E2074B53000CE67BA /* MKAnnotationView+WebCache.m */; };
 		A32012702074B53100CE67BA /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A32012512074B53000CE67BA /* SDWebImageManager.m */; };
@@ -76,6 +78,8 @@
 		974286F7AE15B166834F7FEA /* Pods-FlickrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlickrTests/Pods-FlickrTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A30663F420754CED00F35170 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A30AE6372078BFBB00C8EB02 /* FlickrSearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrSearchDetailViewController.swift; sourceTree = "<group>"; };
+		A30AE6392078F38C00C8EB02 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		A30AE63B2078FEEE00C8EB02 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A320124D2074B53000CE67BA /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
 		A320124E2074B53000CE67BA /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		A320124F2074B53000CE67BA /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
@@ -323,6 +327,7 @@
 			children = (
 				A346B7D420748FE100F15B83 /* FlickrManager.swift */,
 				A35ED1D020763C8700563866 /* FlickrManager + Alamofire.swift */,
+				A30AE63B2078FEEE00C8EB02 /* DataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -338,6 +343,7 @@
 		A35ED23C2076AABF00563866 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A30AE6392078F38C00C8EB02 /* ImageDownloader.swift */,
 				A38A9692207519C30013F3E3 /* UIImageView+Download.swift */,
 				A320127E2074B53B00CE67BA /* FlickrSearch-Bridging-Header.h */,
 			);
@@ -652,6 +658,8 @@
 				A38A9693207519C30013F3E3 /* UIImageView+Download.swift in Sources */,
 				A32012762074B53100CE67BA /* SDWebImageCompat.m in Sources */,
 				A346B7A720748F8600F15B83 /* FlickrSearchListViewController.swift in Sources */,
+				A30AE63A2078F38C00C8EB02 /* ImageDownloader.swift in Sources */,
+				A30AE63C2078FEEE00C8EB02 /* DataManager.swift in Sources */,
 				A32012EC2074CF8100CE67BA /* FlickrHistoryCell.swift in Sources */,
 				A32012722074B53100CE67BA /* UIImageView+HighlightedWebCache.m in Sources */,
 				A346B7D72074901800F15B83 /* FlickrPhoto.swift in Sources */,

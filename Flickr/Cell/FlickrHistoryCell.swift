@@ -11,5 +11,4 @@ import UIKit
 
 class FlickrHistoryCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
-    
 }

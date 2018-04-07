@@ -46,9 +46,9 @@ class FlickrSearchListViewController: UIViewController, UITableViewDelegate, UIT
     
     
     private func deleteRecord(selectedtext: String) {
-        let moc = getContext()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
-        let result = try? moc.fetch(fetchRequest)
+        let moc = DataManager.sharedInstance.getContext()
+        let request = DataManager.sharedInstance.request()
+        let result = try? moc.fetch(request)
         let resultData = result as! [FlickrSearch]
         for object in resultData {
             if object.text == selectedtext {
@@ -58,13 +58,15 @@ class FlickrSearchListViewController: UIViewController, UITableViewDelegate, UIT
         do {
             try moc.save()
         } catch let error as NSError  {
+          //  catch error
+            print(error.localizedDescription)
         }
     }
     
     @IBAction func deleteHistoryTapped() {
-        let moc = getContext()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
-        let result = try? moc.fetch(fetchRequest)
+        let moc = DataManager.sharedInstance.getContext()
+        let request = DataManager.sharedInstance.request()
+        let result = try? moc.fetch(request)
         let resultData = result as! [FlickrSearch]
         for object in resultData {
             moc.delete(object)
@@ -74,14 +76,9 @@ class FlickrSearchListViewController: UIViewController, UITableViewDelegate, UIT
         do {
             try moc.save()
         } catch let error as NSError  {
-        } catch {
-            
+            // catch error
+            print(error.localizedDescription)
         }
-    }
-    
-    private func getContext () -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer.viewContext
     }
     
     @IBAction func dismissButtonTapped() {

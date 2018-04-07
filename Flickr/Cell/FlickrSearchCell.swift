@@ -13,9 +13,8 @@ class FlickrSearchCell: UICollectionViewCell {
     @IBOutlet weak var flickrImageView: UIImageView!
     @IBOutlet weak var imageTitleLabel: UILabel!
     func setupWithPhoto(flickr: FlickrPhoto) {
-        // Remove comment if you want to use SDWebImage
-        flickrImageView.image = UIImage(named: "placeholder")
-        //flickrImageView.sd_setImage(with: flickr.url!)
+        // SDWebImage
+        // flickrImageView.sd_setImage(with: flickr.url!)
         imageTitleLabel.text = flickr.title
         flickrImageView.downloadedFrom(url: flickr.url, contentMode: .scaleAspectFit)
     }

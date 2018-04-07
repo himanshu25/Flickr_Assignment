@@ -77,10 +77,8 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     
     @IBAction func historyItemTapped(_ sender: UIBarButtonItem) {
         list.removeAll()
-        let moc = getContext()
-        NSEntityDescription.entity(forEntityName: "FlickrSearch", in: moc)
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
-        request.returnsObjectsAsFaults = false
+        let moc = DataManager.sharedInstance.getContext()
+        let request = DataManager.sharedInstance.request()
         do {
            var isDuplicate = false
             let result = try moc.fetch(request)
@@ -108,14 +106,9 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
             showErrorAlert(message: "No history to show.")
         }
     }
-
-    private func getContext () -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer.viewContext
-    }
     
     private func saveSearchedText() {
-        let context = getContext()
+        let context = DataManager.sharedInstance.getContext()
         let entity = NSEntityDescription.entity(forEntityName: "FlickrSearch", in: context)
         let record = NSManagedObject(entity: entity!, insertInto: context)
         record.setValue(currentText, forKey: "text")
@@ -186,7 +179,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
                     DispatchQueue.main.async(execute: { () -> Void in
                         strongSelf.indicator.isHidden = true
                         strongSelf.imageCollectionView.isHidden = false
-                       strongSelf.showErrorAlert(message: error?.localizedDescription ?? "")
+                       strongSelf.showErrorAlert(message: error?.localizedDescription ?? "No more Images to show")
                     })
                 }
             }
@@ -208,7 +201,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     // show error
     private func showErrorAlert(message: String) {
         indicator.isHidden = true
-        let alertController = UIAlertController(title: "Search Error", message: !message.isEmpty ? message : "No more images to show." , preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Search", message: !message.isEmpty ? message : "No images to show." , preferredStyle: .alert)
         let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         alertController.addAction(dismissAction)
         present(alertController, animated: true, completion: nil)
