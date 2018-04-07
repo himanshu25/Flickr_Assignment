@@ -72,7 +72,6 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         searchBar.delegate = self
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
-        imageCollectionView?.contentInsetAdjustmentBehavior = .always
     }
     
     @IBAction func historyItemTapped(_ sender: UIBarButtonItem) {
@@ -179,7 +178,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
                     DispatchQueue.main.async(execute: { () -> Void in
                         strongSelf.indicator.isHidden = true
                         strongSelf.imageCollectionView.isHidden = false
-                       strongSelf.showErrorAlert(message: error?.localizedDescription ?? "No more Images to show")
+                       strongSelf.showErrorAlert(message: error?.localizedDescription ?? "")
                     })
                 }
             }
