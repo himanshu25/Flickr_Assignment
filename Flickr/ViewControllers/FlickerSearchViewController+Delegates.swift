@@ -26,8 +26,10 @@ extension FlickrSearchViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if photosArray.count > 0 {
             let detailVC = FlickrSearchDetailViewController.viewController(flickrPhoto: photosArray[indexPath.row])
             navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
     
     
