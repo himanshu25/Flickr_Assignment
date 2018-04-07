@@ -22,6 +22,7 @@ extension FlickrSearchViewController {
         return cell
     }
     
+    
     // UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
@@ -40,7 +41,6 @@ extension FlickrSearchViewController {
         let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
         return CGSize(width: itemWidth, height: itemWidth)
     }
-    
     
     
     func insertMoreIndexPath() {

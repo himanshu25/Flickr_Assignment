@@ -11,11 +11,12 @@ import UIKit
 
 class SearchCell: UICollectionViewCell {
     @IBOutlet weak var flickrImageView: UIImageView!
-    
+    @IBOutlet weak var imageTitleLabel: UILabel!
     func setupWithPhoto(flickr: FlickrPhoto) {
         // Remove comment if you want to use SDWebImage
         // flickrImageView.sd_setImage(with: flickr.url!)
         flickrImageView.image = UIImage(named: "placeholder")
+        imageTitleLabel.text = flickr.title
         flickrImageView.downloadedFrom(url: flickr.url, contentMode: .scaleAspectFit)
     }
     

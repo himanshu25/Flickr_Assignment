@@ -57,19 +57,38 @@
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-C7-5CW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ujc-64-rB8">
+                                                    <rect key="frame" x="-30" y="-75" width="110" height="200"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="la0-ua-EdE">
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="20" id="r01-hi-knY"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fHa-LK-bk3">
+                                                            <rect key="frame" x="0.0" y="30" width="50" height="20"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-C7-5CW">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
+                                                                </imageView>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="bEB-C7-5CW" secondAttribute="bottom" id="JAw-q2-J5O"/>
-                                            <constraint firstItem="bEB-C7-5CW" firstAttribute="top" secondItem="fAT-Vk-KBB" secondAttribute="top" id="NGC-lD-AhP"/>
-                                            <constraint firstAttribute="trailing" secondItem="bEB-C7-5CW" secondAttribute="trailing" id="h6i-Ht-mMF"/>
-                                            <constraint firstItem="bEB-C7-5CW" firstAttribute="leading" secondItem="fAT-Vk-KBB" secondAttribute="leading" id="lM2-3a-EC6"/>
+                                            <constraint firstAttribute="trailing" secondItem="ujc-64-rB8" secondAttribute="trailing" id="TWa-xQ-891"/>
+                                            <constraint firstItem="ujc-64-rB8" firstAttribute="leading" secondItem="fAT-Vk-KBB" secondAttribute="leading" id="fYp-TT-vlo"/>
+                                            <constraint firstAttribute="bottom" secondItem="ujc-64-rB8" secondAttribute="bottom" id="lJ7-YI-mbx"/>
+                                            <constraint firstItem="ujc-64-rB8" firstAttribute="top" secondItem="fAT-Vk-KBB" secondAttribute="top" id="sZX-JE-R5c"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="flickrImageView" destination="bEB-C7-5CW" id="gqP-Lt-jdq"/>
+                                            <outlet property="imageTitleLabel" destination="la0-ua-EdE" id="ieY-GK-giW"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

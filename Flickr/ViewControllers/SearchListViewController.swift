@@ -15,7 +15,7 @@ protocol SearchListViewControllerDelegate: class {
 
 class SearchListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var contentTable: UITableView!
-    var list = [String]()
+    private var list = [String]()
     weak var delegate: SearchListViewControllerDelegate?
     
     static func viewController(with list: [String]) -> SearchListViewController {
@@ -36,16 +36,15 @@ class SearchListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            // if not same search as last one
-            deleteRecord(selectedtext: list[indexPath.row])
             if list[indexPath.row] != FlickrManager.sharedInstance.currentSearchedText {
-               delegate?.didSelectOptionFromHistory(text: list[indexPath.row], list: self.list)
+                deleteRecord(selectedtext: list[indexPath.row])
+               delegate?.didSelectOptionFromHistory(text: list[indexPath.row], list: list)
             }
             dismiss(animated: true, completion: nil)
     }
     
     
-    func deleteRecord(selectedtext: String) {
+    private func deleteRecord(selectedtext: String) {
         let moc = getContext()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
         let result = try? moc.fetch(fetchRequest)
@@ -62,7 +61,6 @@ class SearchListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func deleteHistoryTapped() {
-        
         let moc = getContext()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
         let result = try? moc.fetch(fetchRequest)
@@ -80,7 +78,7 @@ class SearchListViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    func getContext () -> NSManagedObjectContext {
+    private func getContext () -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }

@@ -11,10 +11,10 @@ import UIKit
 
 class FlickrPhoto: NSObject {
     
-    var photoId: String!
-    var farm: Int!
-    var secret: String!
-    var server: String!
+    private var photoId: String!
+    private var farm: Int!
+    private var secret: String!
+    private var server: String!
     var title: String!
     var url: URL!
      

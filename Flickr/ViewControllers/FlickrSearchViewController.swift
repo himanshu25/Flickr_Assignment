@@ -20,15 +20,15 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     
     var photosArray = [FlickrPhoto]()
     weak var searchListVC: SearchListViewController?
-    var list = [String]()
-    var selectedText: String?
-    var currentText = ""
+    private var list = [String]()
+    private var selectedText: String?
+    private var currentText = ""
     let notificationCenter = NotificationCenter.default
     var cellsPerRow: Int = 2
     let inset: CGFloat = 10
     let minimumLineSpacing: CGFloat = 10
     let minimumInteritemSpacing: CGFloat = 10
-    var pageNumber = 1
+    private var pageNumber = 1
     
     static func viewController(with list: [String]?, selectedText: String?) -> FlickrSearchViewController {
         let mainView = UIStoryboard(name: "Main", bundle: nil)
@@ -52,7 +52,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         searchBarSearchButtonClicked(searchBar)
     }
     
-    func saveSearchedText() {
+    private func saveSearchedText() {
         let context = getContext()
         let entity = NSEntityDescription.entity(forEntityName: "FlickrSearch", in: context)
         let record = NSManagedObject(entity: entity!, insertInto: context)
@@ -64,12 +64,12 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         }
     }
     
-    func hideCollectionViewAndIndicator() {
+    private func hideCollectionViewAndIndicator() {
         indicator.isHidden = true
         imageCollectionView.isHidden = true
     }
         
-    func setCellsPerRow() {
+    private func setCellsPerRow() {
         if UIDevice.current.orientation.isLandscape  {
             cellsPerRow = 3
             spacingForSearchBar.constant = 40
@@ -80,7 +80,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         }
     }
     
-    func setupDataSourceAndDelegate() {
+    private func setupDataSourceAndDelegate() {
         searchBar.delegate = self
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
@@ -114,7 +114,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         }
     }
 
-    func getContext () -> NSManagedObjectContext {
+    private func getContext () -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }
@@ -146,13 +146,14 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         photosArray.removeAll()
         if let enteredText = searchBar.text {
             currentText = enteredText
+            FlickrManager.sharedInstance.currentSearchedText = currentText
             getNextPage(pageNumber: 1)
             saveSearchedText()
         }
     }
    
     // get next Page with current page number
-    func getNextPage(pageNumber: Int) {
+    private func getNextPage(pageNumber: Int) {
         FlickrManager.sharedInstance.getPhotosWithText(text:currentText, pageNumber: pageNumber) { [weak self](error, photos) in
             if let strongSelf = self {
                 guard let count = photos?.count else {
@@ -190,7 +191,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         }
     }
     
-    func moreData() {
+    private func moreData() {
         pageNumber += 1
         getNextPage(pageNumber: pageNumber)
     }
