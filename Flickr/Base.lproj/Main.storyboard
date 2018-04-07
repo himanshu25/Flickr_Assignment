@@ -270,7 +270,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wb2-J6-m7V">
-                                <rect key="frame" x="10" y="40" width="355" height="158.5"/>
+                                <rect key="frame" x="10" y="30" width="355" height="188.5"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -285,9 +285,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="hIA-7E-1vD" firstAttribute="top" secondItem="wb2-J6-m7V" secondAttribute="bottom" constant="20" id="5dc-EF-BV6"/>
+                            <constraint firstItem="hIA-7E-1vD" firstAttribute="top" secondItem="wb2-J6-m7V" secondAttribute="bottom" id="5dc-EF-BV6"/>
                             <constraint firstItem="tfl-Ti-aBl" firstAttribute="trailing" secondItem="wb2-J6-m7V" secondAttribute="trailing" constant="10" id="5wW-nE-7Yh"/>
-                            <constraint firstItem="wb2-J6-m7V" firstAttribute="top" secondItem="tfl-Ti-aBl" secondAttribute="top" constant="20" id="AgF-3m-5Wr"/>
+                            <constraint firstItem="wb2-J6-m7V" firstAttribute="top" secondItem="tfl-Ti-aBl" secondAttribute="top" constant="10" id="AgF-3m-5Wr"/>
                             <constraint firstItem="hIA-7E-1vD" firstAttribute="centerX" secondItem="tfl-Ti-aBl" secondAttribute="centerX" id="Scv-q5-WTc"/>
                             <constraint firstItem="wb2-J6-m7V" firstAttribute="leading" secondItem="tfl-Ti-aBl" secondAttribute="leading" constant="10" id="YNz-2D-Lct"/>
                             <constraint firstItem="hIA-7E-1vD" firstAttribute="centerY" secondItem="tfl-Ti-aBl" secondAttribute="centerY" id="bxf-Uq-FwR"/>
