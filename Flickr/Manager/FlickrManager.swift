@@ -17,6 +17,7 @@ class FlickrManager {
     let pageNumber = 1
     
     static var imageURLDict:[String: UIImage] = [:]
+    var currentSearchedText = ""
     static var sharedInstance = FlickrManager()
     typealias flickrCompletionBlock = (NSError?, [FlickrPhoto]?) -> Void
     let urlConfig = URLSessionConfiguration.default
