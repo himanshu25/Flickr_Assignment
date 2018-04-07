@@ -170,16 +170,16 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
                     strongSelf.showErrorAlert(message: "")
                     return
                 }
+                for photo in photos! {
+                    strongSelf.photosArray.append(photo)
+                }
                 if error == nil && (photos?.count ?? 0) > 0 {
-                    for photo in photos! {
-                        strongSelf.photosArray.append(photo)
-                    }
                     DispatchQueue.main.async(execute: { () -> Void in
                         strongSelf.insertMoreIndexPath(count: photos?.count ?? 0)
                         strongSelf.indicator.isHidden = true
+                        strongSelf.imageCollectionView.reloadData()
                         strongSelf.imageCollectionView.isHidden = false
                         strongSelf.title = strongSelf.currentText
-                        strongSelf.imageCollectionView.reloadData()
                     })
                     
                 } else {

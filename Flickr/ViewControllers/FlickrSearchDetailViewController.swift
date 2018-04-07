@@ -11,21 +11,22 @@ import Foundation
 class FlickrSearchDetailViewController: UIViewController {
     @IBOutlet weak var imageTitleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
-
+    var flickrPhoto: FlickrPhoto!
     private var imageTitle = ""
     private var image: UIImage!
-    static func viewController(title: String, image: UIImage) -> FlickrSearchDetailViewController {
+    static func viewController(flickrPhoto: FlickrPhoto) -> FlickrSearchDetailViewController {
         let mainView = UIStoryboard(name: "Main", bundle: nil)
         let searchDetailVC = mainView.instantiateViewController(withIdentifier: "searchDetailVC") as! FlickrSearchDetailViewController
-        searchDetailVC.imageTitle = title
-        searchDetailVC.image = image
+//        searchDetailVC.imageTitle = title
+//        searchDetailVC.image = image
+        searchDetailVC.flickrPhoto = flickrPhoto
         return searchDetailVC
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageTitleLabel.text = imageTitle
-        imageView.image = image
+        imageTitleLabel.text = flickrPhoto.title
+        imageView.image =  FlickrManager.imageURLDict[flickrPhoto.url.absoluteString]
     }
     
 }

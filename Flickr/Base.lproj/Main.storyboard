@@ -68,14 +68,9 @@
                                                             <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fHa-LK-bk3">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-C7-5CW">
                                                             <rect key="frame" x="0.0" y="30" width="50" height="20"/>
-                                                            <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-C7-5CW">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
-                                                                </imageView>
-                                                            </subviews>
-                                                        </stackView>
+                                                        </imageView>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -280,7 +275,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hIA-7E-1vD">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="hIA-7E-1vD">
                                 <rect key="frame" x="62.5" y="218.5" width="250" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="2mN-un-jfO"/>

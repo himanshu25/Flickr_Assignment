@@ -15,6 +15,7 @@ extension UIImageView {
         contentMode = mode
         if let image = FlickrManager.imageURLDict[url.absoluteString] {
             self.image = image
+
         } else {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 guard
@@ -26,6 +27,7 @@ extension UIImageView {
                 FlickrManager.imageURLDict[url.absoluteString] = image
                 DispatchQueue.main.async() {
                     self.image = image
+                    
                 }
                 }.resume()
         }
