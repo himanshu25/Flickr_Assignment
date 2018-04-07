@@ -17,7 +17,7 @@ extension FlickrSearchViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrSearchCell", for: indexPath) as! SearchCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrSearchCell", for: indexPath) as! FlickrSearchCell
         cell.setupWithPhoto(flickr: photosArray[indexPath.row])
         return cell
     }

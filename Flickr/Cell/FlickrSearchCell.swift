@@ -1,5 +1,5 @@
 //
-//  SearchCell.swift
+//  FlickrSearchCell.swift
 //  Flickr
 //
 //  Created by Himanshu on 04/04/18.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SearchCell: UICollectionViewCell {
+class FlickrSearchCell: UICollectionViewCell {
     @IBOutlet weak var flickrImageView: UIImageView!
     @IBOutlet weak var imageTitleLabel: UILabel!
     func setupWithPhoto(flickr: FlickrPhoto) {

@@ -1,5 +1,5 @@
 //
-//  ListCell.swift
+//  FlickrHistoryCell.swift
 //  Flickr
 //
 //  Created by Himanshu on 04/04/18.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ListCell: UITableViewCell {
+class FlickrHistoryCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     
 }
