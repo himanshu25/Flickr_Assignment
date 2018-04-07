@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FlickrSearchListViewController.swift
 //  Flickr
 //
 //  Created by Himanshu on 04/04/18.
@@ -13,15 +13,16 @@ protocol SearchListViewControllerDelegate: class {
     func didSelectOptionFromHistory(text: String, list: [String])
 }
 
-class SearchListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FlickrSearchListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var contentTable: UITableView!
     private var list = [String]()
     weak var delegate: SearchListViewControllerDelegate?
     
-    static func viewController(with list: [String]) -> SearchListViewController {
+    static func viewController(with list: [String]) -> FlickrSearchListViewController {
         let mainView = UIStoryboard(name: "Main", bundle: nil)
-        let searchListVC = mainView.instantiateViewController(withIdentifier: "searchListVC") as! SearchListViewController
+        let searchListVC = mainView.instantiateViewController(withIdentifier: "searchListVC") as! FlickrSearchListViewController
         searchListVC.list = list
+        searchListVC.list.reverse()
         return searchListVC
     }
     
@@ -30,7 +31,7 @@ class SearchListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! ListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FlickrHistoryCell", for: indexPath) as! FlickrHistoryCell
         cell.label.text = list[indexPath.row]
         return cell
     }

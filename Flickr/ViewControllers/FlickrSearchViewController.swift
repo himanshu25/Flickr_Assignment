@@ -19,7 +19,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     var photosArray = [FlickrPhoto]()
-    weak var searchListVC: SearchListViewController?
+    weak var searchListVC: FlickrSearchListViewController?
     private var list = [String]()
     private var selectedText: String?
     private var currentText = ""
@@ -52,18 +52,6 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         searchBarSearchButtonClicked(searchBar)
     }
     
-    private func saveSearchedText() {
-        let context = getContext()
-        let entity = NSEntityDescription.entity(forEntityName: "FlickrSearch", in: context)
-        let record = NSManagedObject(entity: entity!, insertInto: context)
-        record.setValue(currentText, forKey: "text")
-        record.setValue(4, forKey: "time")
-        do {
-            try context.save()
-        } catch {
-        }
-    }
-    
     private func hideCollectionViewAndIndicator() {
         indicator.isHidden = true
         imageCollectionView.isHidden = true
@@ -92,22 +80,29 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
         let moc = getContext()
         NSEntityDescription.entity(forEntityName: "FlickrSearch", in: moc)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FlickrSearch")
-        //request.predicate = NSPredicate(format: "age = %@", "12")
         request.returnsObjectsAsFaults = false
         do {
+           var isDuplicate = false
             let result = try moc.fetch(request)
             for data in result as! [NSManagedObject] {
-               let text =  data.value(forKey: "text") as! String
-                list.append(text)
-                list.reverse()
+               let newText =  data.value(forKey: "text") as! String
+                for text in list {
+                    if text == newText {
+                        isDuplicate = true
+                    }
+                }
+                if !isDuplicate {
+                    list.append(newText)
+                }
             }
         } catch {
         }
         searchBar.resignFirstResponder()
         if list.count > 0 {
-            searchListVC = SearchListViewController.viewController(with: list)
+            searchListVC = FlickrSearchListViewController.viewController(with: list)
             searchListVC?.delegate = self
-            navigationController?.present(searchListVC!, animated: true, completion: nil)
+            guard let searchListVC = searchListVC else { return }
+            navigationController?.present(searchListVC, animated: true, completion: nil)
         }
         else {
             showErrorAlert(message: "No history to show.")
@@ -117,6 +112,18 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     private func getContext () -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
+    }
+    
+    private func saveSearchedText() {
+        let context = getContext()
+        let entity = NSEntityDescription.entity(forEntityName: "FlickrSearch", in: context)
+        let record = NSManagedObject(entity: entity!, insertInto: context)
+        record.setValue(currentText, forKey: "text")
+        record.setValue(4, forKey: "time")
+        do {
+            try context.save()
+        } catch {
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
