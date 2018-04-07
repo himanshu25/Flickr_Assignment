@@ -19,6 +19,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate, SearchL
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     var photosArray = [FlickrPhoto]()
+    var contentCellsArray = [UICollectionViewCell]()
     weak var searchListVC: FlickrSearchListViewController?
     private var list = [String]()
     private var selectedText: String?

@@ -266,6 +266,48 @@
             </objects>
             <point key="canvasLocation" x="669.60000000000002" y="31.934032983508249"/>
         </scene>
+        <!--Flickr Search Detail View Controller-->
+        <scene sceneID="4bZ-Wq-161">
+            <objects>
+                <viewController storyboardIdentifier="searchDetailVC" id="Oyf-Vw-sTe" customClass="FlickrSearchDetailViewController" customModule="Flickr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="srl-Cj-h8f">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wb2-J6-m7V">
+                                <rect key="frame" x="0.0" y="101" width="375" height="97.5"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hIA-7E-1vD">
+                                <rect key="frame" x="62.5" y="218.5" width="250" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="2mN-un-jfO"/>
+                                    <constraint firstAttribute="width" constant="250" id="cVq-Pt-j6B"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hIA-7E-1vD" firstAttribute="top" secondItem="wb2-J6-m7V" secondAttribute="bottom" constant="20" id="5dc-EF-BV6"/>
+                            <constraint firstItem="tfl-Ti-aBl" firstAttribute="trailing" secondItem="wb2-J6-m7V" secondAttribute="trailing" id="5wW-nE-7Yh"/>
+                            <constraint firstItem="wb2-J6-m7V" firstAttribute="top" secondItem="tfl-Ti-aBl" secondAttribute="top" constant="81" id="AgF-3m-5Wr"/>
+                            <constraint firstItem="hIA-7E-1vD" firstAttribute="centerX" secondItem="tfl-Ti-aBl" secondAttribute="centerX" id="Scv-q5-WTc"/>
+                            <constraint firstItem="wb2-J6-m7V" firstAttribute="leading" secondItem="tfl-Ti-aBl" secondAttribute="leading" id="YNz-2D-Lct"/>
+                            <constraint firstItem="hIA-7E-1vD" firstAttribute="centerY" secondItem="tfl-Ti-aBl" secondAttribute="centerY" id="bxf-Uq-FwR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="tfl-Ti-aBl"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageTitleLabel" destination="wb2-J6-m7V" id="YR6-sQ-U8z"/>
+                        <outlet property="imageView" destination="hIA-7E-1vD" id="Ddh-Yu-6yR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aNc-zd-OUM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="828" y="690.40479760119945"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Charcoal" width="15" height="15"/>
